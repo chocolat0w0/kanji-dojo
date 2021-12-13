@@ -1,4 +1,5 @@
 import React, { VFC } from 'react';
+import { uuid } from 'uuidv4';
 import './App.css';
 
 type Onyomi = {
@@ -6,7 +7,6 @@ type Onyomi = {
   okuri?: string;
 };
 type Kanji = {
-  id: string;
   ji: string;
   kun: string[];
   on: Onyomi[];
@@ -16,7 +16,6 @@ type Kanji = {
 // TODO: 別ファイルへ
 const kanjis: Kanji[] = [
   {
-    id: '1',
     ji: '一',
     kun: ['イチ', 'イツ'],
     on: [
@@ -31,7 +30,6 @@ const kanjis: Kanji[] = [
     grade: 1,
   },
   {
-    id: '2',
     ji: '二',
     kun: ['二'],
     on: [
@@ -46,7 +44,6 @@ const kanjis: Kanji[] = [
     grade: 1,
   },
   {
-    id: '3',
     ji: '伝',
     kun: ['デン'],
     on: [
@@ -80,7 +77,7 @@ const App: VFC = () => (
             {kanjis
               .filter((k) => k.grade === grade)
               .map((k) => {
-                const { id } = k;
+                const id = uuid();
 
                 return (
                   <label htmlFor={id}>
