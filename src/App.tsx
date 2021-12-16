@@ -1,68 +1,7 @@
 import React, { VFC } from 'react';
-import { uuid } from 'uuidv4';
+import { kanjiList } from './data/KanjiList';
+import CheckList from './components/CheckList';
 import './App.css';
-
-type Onyomi = {
-  yomi: string;
-  okuri?: string;
-};
-type Kanji = {
-  ji: string;
-  kun: string[];
-  on: Onyomi[];
-  grade: number;
-};
-// TODO: スクレイピング候補 https://www.benricho.org/kanji/kyoikukanji/1nen.html
-// TODO: 別ファイルへ
-const kanjis: Kanji[] = [
-  {
-    ji: '一',
-    kun: ['イチ', 'イツ'],
-    on: [
-      {
-        yomi: 'ひと',
-      },
-      {
-        yomi: 'ひと',
-        okuri: 'つ',
-      },
-    ],
-    grade: 1,
-  },
-  {
-    ji: '二',
-    kun: ['二'],
-    on: [
-      {
-        yomi: 'ふた',
-      },
-      {
-        yomi: 'ふた',
-        okuri: 'つ',
-      },
-    ],
-    grade: 1,
-  },
-  {
-    ji: '伝',
-    kun: ['デン'],
-    on: [
-      {
-        yomi: 'つた',
-        okuri: 'わる',
-      },
-      {
-        yomi: 'つた',
-        okuri: 'える',
-      },
-      {
-        yomi: 'つた',
-        okuri: 'う',
-      },
-    ],
-    grade: 4,
-  },
-];
 
 const App: VFC = () => (
   <div className="App">
@@ -74,18 +13,7 @@ const App: VFC = () => (
         .map((grade) => (
           <section>
             <h1>{grade}年の漢字</h1>
-            {kanjis
-              .filter((k) => k.grade === grade)
-              .map((k) => {
-                const id = uuid();
-
-                return (
-                  <label htmlFor={id}>
-                    <input id={id} name="kanji" type="checkbox" />
-                    {k.ji}
-                  </label>
-                );
-              })}
+            <CheckList list={kanjiList.filter((k) => k.grade === grade)} />
           </section>
         ))}
       {/* 学習対象にした漢字を表示 */}
