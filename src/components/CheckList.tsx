@@ -1,5 +1,4 @@
 import { useState, VFC } from 'react';
-import { uuid } from 'uuidv4';
 import { Kanji } from '../data/KanjiList';
 
 const CheckBox: VFC<{
@@ -7,8 +6,14 @@ const CheckBox: VFC<{
   name: string;
   label: string;
   checked?: boolean;
-}> = ({ id, name, label, checked = false }) => {
+  handleChange: (id: string, isChecked: boolean) => void;
+}> = ({ id, name, label, checked = false, handleChange }) => {
   const [isChecked, setIsChecked] = useState(checked);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
+    handleChange(id, e.target.checked);
+  };
 
   return (
     <label htmlFor={id}>
@@ -17,21 +22,27 @@ const CheckBox: VFC<{
         name={name}
         type="checkbox"
         checked={isChecked}
-        onChange={(e) => setIsChecked(e.target.checked)}
+        onChange={(e) => onChange(e)}
       />
       {label}
     </label>
   );
 };
 
-const KanjiCheckList: VFC<{ list: Kanji[] }> = ({ list }) => (
+const KanjiCheckList: VFC<{
+  list: Kanji[];
+  handleChange: (id: string, isChecked: boolean) => void;
+}> = ({ list, handleChange }) => (
   <form>
-    {list.map((l) => {
-      const id = uuid();
-
-      return <CheckBox id={id} name="kanji" label={l.ji} key={id} />;
-    })}
+    {list.map((l) => (
+      <CheckBox
+        id={l.id}
+        name="kanji"
+        label={l.ji}
+        key={l.id}
+        handleChange={handleChange}
+      />
+    ))}
   </form>
 );
-
 export default KanjiCheckList;

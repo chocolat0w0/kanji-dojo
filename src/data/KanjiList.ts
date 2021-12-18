@@ -3,6 +3,7 @@ type Onyomi = {
   okuri?: string;
 };
 type Kanji = {
+  id: string;
   ji: string;
   kun: string[];
   on: Onyomi[];
@@ -12,6 +13,7 @@ type Kanji = {
 // TODO: 別ファイルへ
 const kanjiList: Kanji[] = [
   {
+    id: '1-1',
     ji: '一',
     kun: ['イチ', 'イツ'],
     on: [
@@ -26,6 +28,7 @@ const kanjiList: Kanji[] = [
     grade: 1,
   },
   {
+    id: '1-2',
     ji: '二',
     kun: ['二'],
     on: [
@@ -40,6 +43,7 @@ const kanjiList: Kanji[] = [
     grade: 1,
   },
   {
+    id: '4-1',
     ji: '伝',
     kun: ['デン'],
     on: [
