@@ -1,14 +1,24 @@
 import React, { useState, VFC } from 'react';
 import ExampleList from 'components/ExampleList';
+import GradeCheckBox from 'components/GradeCheckBox';
 import { kanjiList } from './data/KanjiList';
-import CheckList from './components/CheckList';
+import KanjiCheckList from './components/KanjiCheckList';
 import './App.css';
 
 const App: VFC = () => {
   const [checkedList, setCheckedList] = useState<string[]>([]);
 
   const handleChange = (id: string, isChecked: boolean) => {
-    if (isChecked) {
+    if (id.startsWith('grade-')) {
+      const gradeKanjiList = kanjiList
+        .filter((k) => k.grade.toString() === id.split('grade-')[1])
+        .map((k) => k.id);
+      if (isChecked) {
+        setCheckedList((l) => [...new Set([...l, ...gradeKanjiList])]);
+      } else {
+        setCheckedList((l) => l.filter((i) => !gradeKanjiList.includes(i)));
+      }
+    } else if (isChecked) {
       setCheckedList((l) => [...l, id]);
     } else {
       setCheckedList((l) => l.filter((i) => i !== id));
@@ -29,9 +39,17 @@ const App: VFC = () => {
           .map((i) => i + 1)
           .map((grade) => (
             <section key={`grade${grade}`}>
-              <h1>{grade}年の漢字</h1>
-              <CheckList
+              <h1>
+                <GradeCheckBox
+                  id={`grade-${grade}`}
+                  name="grade"
+                  label={`${grade}年の漢字`}
+                  handleChange={handleChange}
+                />
+              </h1>
+              <KanjiCheckList
                 list={kanjiList.filter((k) => k.grade === grade)}
+                checkedList={checkedList}
                 handleChange={handleChange}
               />
             </section>
