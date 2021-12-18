@@ -1,0 +1,10 @@
+.example-kanji-block {
+  padding: 0.2em 0.8em;
+  margin: 0 0.4em;
+  border: 1px solid gray;
+}
+
+.example-kanji {
+  display: block;
+  visibility: hidden;
+}
