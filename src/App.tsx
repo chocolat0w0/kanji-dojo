@@ -31,7 +31,7 @@ const App: VFC = () => {
             </section>
           ))}
         {/* 学習対象にした漢字を表示 */}
-        {checkedList}
+        {kanjiList.filter((l) => checkedList.includes(l.id)).map((l) => l.ji)}
 
         {/* 学習対象の漢字の問題文を表示 */}
       </main>
