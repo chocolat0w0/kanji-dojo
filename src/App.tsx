@@ -8,21 +8,20 @@ import './App.css';
 const App: VFC = () => {
   const [checkedList, setCheckedList] = useState<string[]>([]);
 
+  const handleGradeChange = (id: string, isChecked: boolean) => {
+    const gradeKanjiList = kanjiList
+      .filter((k) => k.grade.toString() === id.split('grade-')[1])
+      .map((k) => k.id);
+
+    setCheckedList((l) =>
+      isChecked
+        ? [...new Set([...l, ...gradeKanjiList])]
+        : l.filter((i) => !gradeKanjiList.includes(i)),
+    );
+  };
+
   const handleChange = (id: string, isChecked: boolean) => {
-    if (id.startsWith('grade-')) {
-      const gradeKanjiList = kanjiList
-        .filter((k) => k.grade.toString() === id.split('grade-')[1])
-        .map((k) => k.id);
-      if (isChecked) {
-        setCheckedList((l) => [...new Set([...l, ...gradeKanjiList])]);
-      } else {
-        setCheckedList((l) => l.filter((i) => !gradeKanjiList.includes(i)));
-      }
-    } else if (isChecked) {
-      setCheckedList((l) => [...l, id]);
-    } else {
-      setCheckedList((l) => l.filter((i) => i !== id));
-    }
+    setCheckedList((l) => (isChecked ? [...l, id] : l.filter((i) => i !== id)));
   };
 
   const checkedKanjiList = kanjiList
@@ -44,7 +43,7 @@ const App: VFC = () => {
                   id={`grade-${grade}`}
                   name="grade"
                   label={`${grade}年の漢字`}
-                  handleChange={handleChange}
+                  handleChange={handleGradeChange}
                 />
               </h1>
               <KanjiCheckList
