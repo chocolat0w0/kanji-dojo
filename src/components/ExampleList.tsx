@@ -23,7 +23,7 @@ const ExampleList: VFC<{
   return (
     <ul>
       {list.map((l) => (
-        <li>
+        <li key={`exam-${l.toString()}`}>
           {l.map((x) => {
             if (typeof x === 'string') {
               return x;
@@ -31,7 +31,10 @@ const ExampleList: VFC<{
             const [ji, yomi] = x;
 
             return (
-              <ruby className="example-kanji-block">
+              <ruby
+                className="example-kanji-block"
+                key={`${l.toString()}-${ji}`}
+              >
                 <span className="example-kanji">{ji}</span>
                 <rp>(</rp>
                 <rt>{yomi}</rt>
