@@ -36,23 +36,29 @@ const App: VFC = () => {
         <h1>漢字リスト</h1>
         {[...Array(6).keys()]
           .map((i) => i + 1)
-          .map((grade) => (
-            <section key={`grade${grade}`}>
-              <h1>
-                <GradeCheckBox
-                  id={`grade-${grade}`}
-                  name="grade"
-                  label={`${grade}年の漢字`}
-                  handleChange={handleGradeChange}
+          .map((grade) => {
+            const gradeList = kanjiList.filter((k) => k.grade === grade);
+
+            return (
+              <section key={`grade${grade}`}>
+                <h1>
+                  <GradeCheckBox
+                    id={`grade-${grade}`}
+                    name="grade"
+                    label={`${grade}年の漢字`}
+                    gradeList={gradeList}
+                    checkedList={checkedList}
+                    handleChange={handleGradeChange}
+                  />
+                </h1>
+                <KanjiCheckList
+                  list={gradeList}
+                  checkedList={checkedList}
+                  handleChange={handleChange}
                 />
-              </h1>
-              <KanjiCheckList
-                list={kanjiList.filter((k) => k.grade === grade)}
-                checkedList={checkedList}
-                handleChange={handleChange}
-              />
-            </section>
-          ))}
+              </section>
+            );
+          })}
         {/* 学習対象にした漢字を表示 */}
         <h1>選んだ漢字</h1>
         {checkedKanjiList.join(' ')}

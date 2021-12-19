@@ -1,15 +1,15 @@
-import { useState, VFC } from 'react';
+import { Kanji } from 'data/KanjiList';
+import { VFC } from 'react';
 
 const GradeCheckBox: VFC<{
   id: string;
   name: string;
   label: string;
+  gradeList: Kanji[];
+  checkedList: string[];
   handleChange: (id: string, isChecked: boolean) => void;
-}> = ({ id, name, label, handleChange }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
+}> = ({ id, name, label, gradeList, checkedList, handleChange }) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
     handleChange(id, e.target.checked);
   };
 
@@ -19,7 +19,7 @@ const GradeCheckBox: VFC<{
         id={id}
         name={name}
         type="checkbox"
-        checked={isChecked}
+        checked={gradeList.every((l) => checkedList.includes(l.id))}
         onChange={(e) => onChange(e)}
       />
       {label}
