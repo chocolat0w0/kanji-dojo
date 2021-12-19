@@ -4,7 +4,8 @@ import './ExampleList.css';
 
 const ExampleList: VFC<{
   targetList: string[];
-}> = ({ targetList }) => {
+  canCheckAnswer: boolean;
+}> = ({ targetList, canCheckAnswer }) => {
   const list = exampleList
     .map((e) =>
       e.map((x) => {
@@ -21,7 +22,7 @@ const ExampleList: VFC<{
     .filter((e) => e.find((x) => typeof x !== 'string'));
 
   return (
-    <ul>
+    <ul className={canCheckAnswer ? 'show-answer' : 'hide-answer'}>
       {list.map((l) => (
         <li key={`exam-${l.toString()}`}>
           {l.map((x) => {

@@ -6,5 +6,12 @@
 
 .example-kanji {
   display: block;
+}
+
+.hide-answer .example-kanji {
   visibility: hidden;
+}
+
+.show-answer .example-kanji {
+  visibility: visible;
 }

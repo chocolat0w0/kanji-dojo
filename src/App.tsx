@@ -1,4 +1,4 @@
-import React, { useState, VFC } from 'react';
+import React, { useEffect, useState, VFC } from 'react';
 import ExampleList from 'components/ExampleList';
 import GradeCheckBox from 'components/GradeCheckBox';
 import { kanjiList } from './data/KanjiList';
@@ -7,6 +7,11 @@ import './App.css';
 
 const App: VFC = () => {
   const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [canCheckAnswer, setCanCheckAnswer] = useState(false);
+
+  useEffect(() => {
+    setCanCheckAnswer(false);
+  }, [checkedList]);
 
   const handleGradeChange = (id: string, isChecked: boolean) => {
     const gradeKanjiList = kanjiList
@@ -65,7 +70,15 @@ const App: VFC = () => {
 
         {/* 学習対象の漢字の問題文を表示 */}
         <h1>問題文</h1>
-        <ExampleList targetList={checkedKanjiList} />
+        <ExampleList
+          targetList={checkedKanjiList}
+          canCheckAnswer={canCheckAnswer}
+        />
+
+        {/* 学習対象の漢字の問題文を表示 */}
+        <button type="button" onClick={(_) => setCanCheckAnswer(true)}>
+          答えを見る
+        </button>
       </main>
     </div>
   );
