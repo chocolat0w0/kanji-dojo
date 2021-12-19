@@ -1,17 +1,13 @@
-import React, { useEffect, useState, VFC } from 'react';
+import React, { useState, VFC } from 'react';
 import ExampleList from 'components/ExampleList';
 import GradeCheckBox from 'components/GradeCheckBox';
+import { Box, Typography } from '@material-ui/core';
 import { kanjiList } from './data/KanjiList';
 import KanjiCheckList from './components/KanjiCheckList';
 import './App.css';
 
 const App: VFC = () => {
   const [checkedList, setCheckedList] = useState<string[]>([]);
-  const [canCheckAnswer, setCanCheckAnswer] = useState(false);
-
-  useEffect(() => {
-    setCanCheckAnswer(false);
-  }, [checkedList]);
 
   const handleGradeChange = (id: string, isChecked: boolean) => {
     const gradeKanjiList = kanjiList
@@ -35,51 +31,56 @@ const App: VFC = () => {
 
   return (
     <div className="App">
-      <header className="App-header">漢字道場</header>
-      <main>
+      <header className="App-header">
+        <h1>漢字道場</h1>
+      </header>
+      <Box component="main" p="30px">
         {/* 漢字を学習年別に表示 */}
-        <h1>漢字リスト</h1>
-        {[...Array(6).keys()]
-          .map((i) => i + 1)
-          .map((grade) => {
-            const gradeList = kanjiList.filter((k) => k.grade === grade);
+        <Box component="section">
+          <Typography variant="h4" gutterBottom component="h1">
+            漢字リスト
+          </Typography>
+          {[...Array(6).keys()]
+            .map((i) => i + 1)
+            .map((grade) => {
+              const gradeList = kanjiList.filter((k) => k.grade === grade);
 
-            return (
-              <section key={`grade${grade}`}>
-                <h1>
-                  <GradeCheckBox
-                    id={`grade-${grade}`}
-                    name="grade"
-                    label={`${grade}年の漢字`}
-                    gradeList={gradeList}
+              return (
+                <section key={`grade${grade}`}>
+                  <Typography variant="h5" component="h1">
+                    <GradeCheckBox
+                      id={`grade-${grade}`}
+                      name="grade"
+                      label={`${grade}年の漢字`}
+                      gradeList={gradeList}
+                      checkedList={checkedList}
+                      handleChange={handleGradeChange}
+                    />
+                  </Typography>
+                  <KanjiCheckList
+                    list={gradeList}
                     checkedList={checkedList}
-                    handleChange={handleGradeChange}
+                    handleChange={handleChange}
                   />
-                </h1>
-                <KanjiCheckList
-                  list={gradeList}
-                  checkedList={checkedList}
-                  handleChange={handleChange}
-                />
-              </section>
-            );
-          })}
-        {/* 学習対象にした漢字を表示 */}
-        <h1>選んだ漢字</h1>
-        {checkedKanjiList.join(' ')}
+                </section>
+              );
+            })}
+        </Box>
+
+        {/* 学習対象にした漢字を表示 (検証用、最後に削除) */}
+        <section>
+          <h1>選んだ漢字</h1>
+          {checkedKanjiList.join(' ')}
+        </section>
 
         {/* 学習対象の漢字の問題文を表示 */}
-        <h1>問題文</h1>
-        <ExampleList
-          targetList={checkedKanjiList}
-          canCheckAnswer={canCheckAnswer}
-        />
-
-        {/* 学習対象の漢字の問題文を表示 */}
-        <button type="button" onClick={(_) => setCanCheckAnswer(true)}>
-          答えを見る
-        </button>
-      </main>
+        <Box component="section" mt="30px">
+          <Typography variant="h4" gutterBottom component="h1">
+            問題文
+          </Typography>
+          <ExampleList targetList={checkedKanjiList} />
+        </Box>
+      </Box>
     </div>
   );
 };

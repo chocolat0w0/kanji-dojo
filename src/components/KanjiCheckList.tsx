@@ -1,3 +1,4 @@
+import { Box } from '@material-ui/core';
 import { VFC } from 'react';
 import { Kanji } from '../data/KanjiList';
 import CheckBox from './CheckBox';
@@ -7,7 +8,7 @@ const KanjiCheckList: VFC<{
   checkedList: string[];
   handleChange: (id: string, isChecked: boolean) => void;
 }> = ({ list, checkedList, handleChange }) => (
-  <form>
+  <Box sx={{ display: 'flex', flexDirection: 'row', ml: 3 }} component="form">
     {list.map((l) => (
       <CheckBox
         id={l.id}
@@ -18,6 +19,6 @@ const KanjiCheckList: VFC<{
         handleChange={handleChange}
       />
     ))}
-  </form>
+  </Box>
 );
 export default KanjiCheckList;

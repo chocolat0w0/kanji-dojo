@@ -1,3 +1,4 @@
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { VFC } from 'react';
 
 const CheckBox: VFC<{
@@ -12,16 +13,17 @@ const CheckBox: VFC<{
   };
 
   return (
-    <label htmlFor={id}>
-      <input
-        id={id}
-        name={name}
-        type="checkbox"
-        checked={checkedList.includes(id)}
-        onChange={(e) => onChange(e)}
-      />
-      {label}
-    </label>
+    <FormControlLabel
+      label={label}
+      control={
+        <Checkbox
+          name={name}
+          checked={checkedList.includes(id)}
+          onChange={onChange}
+          size="small"
+        />
+      }
+    />
   );
 };
 

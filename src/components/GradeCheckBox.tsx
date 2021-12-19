@@ -1,3 +1,4 @@
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { Kanji } from 'data/KanjiList';
 import { VFC } from 'react';
 
@@ -13,17 +14,21 @@ const GradeCheckBox: VFC<{
     handleChange(id, e.target.checked);
   };
 
+  const hasAllChecked = gradeList.every((l) => checkedList.includes(l.id));
+  const hasSomeChecked = gradeList.some((l) => checkedList.includes(l.id));
+
   return (
-    <label htmlFor={id}>
-      <input
-        id={id}
-        name={name}
-        type="checkbox"
-        checked={gradeList.every((l) => checkedList.includes(l.id))}
-        onChange={(e) => onChange(e)}
-      />
-      {label}
-    </label>
+    <FormControlLabel
+      label={label}
+      control={
+        <Checkbox
+          name={name}
+          checked={hasAllChecked}
+          indeterminate={hasSomeChecked && !hasAllChecked}
+          onChange={onChange}
+        />
+      }
+    />
   );
 };
 
