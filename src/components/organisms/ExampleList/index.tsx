@@ -1,7 +1,7 @@
 import exampleList from 'data/ExampleList';
 import { useEffect, useState, VFC } from 'react';
 import { Button } from '@material-ui/core';
-import './ExampleList.css';
+import './index.css';
 
 const ExampleList: VFC<{
   targetList: string[];

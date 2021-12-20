@@ -1,13 +1,21 @@
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { VFC } from 'react';
 
-const CheckBox: VFC<{
+type CheckBoxType = {
   id: string;
   name: string;
   label: string;
-  checkedList: string[];
+  checked?: boolean;
   handleChange: (id: string, isChecked: boolean) => void;
-}> = ({ id, name, label, checkedList, handleChange }) => {
+};
+
+const CheckBox: VFC<CheckBoxType> = ({
+  id,
+  name,
+  label,
+  checked = false,
+  handleChange,
+}) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChange(id, e.target.checked);
   };
@@ -18,7 +26,7 @@ const CheckBox: VFC<{
       control={
         <Checkbox
           name={name}
-          checked={checkedList.includes(id)}
+          checked={checked}
           onChange={onChange}
           size="small"
         />
@@ -27,4 +35,5 @@ const CheckBox: VFC<{
   );
 };
 
+export type { CheckBoxType };
 export default CheckBox;

@@ -1,9 +1,8 @@
 import React, { useState, VFC } from 'react';
-import ExampleList from 'components/ExampleList';
-import GradeCheckBox from 'components/GradeCheckBox';
+import ExampleList from 'components/organisms/ExampleList';
 import { Box, Typography } from '@material-ui/core';
 import { kanjiList } from './data/KanjiList';
-import KanjiCheckList from './components/KanjiCheckList';
+import KanjiCheckList from './components/organisms/KanjiCheckList';
 import './App.css';
 
 const App: VFC = () => {
@@ -46,23 +45,13 @@ const App: VFC = () => {
               const gradeList = kanjiList.filter((k) => k.grade === grade);
 
               return (
-                <section key={`grade${grade}`}>
-                  <Typography variant="h5" component="h1">
-                    <GradeCheckBox
-                      id={`grade-${grade}`}
-                      name="grade"
-                      label={`${grade}年の漢字`}
-                      gradeList={gradeList}
-                      checkedList={checkedList}
-                      handleChange={handleGradeChange}
-                    />
-                  </Typography>
-                  <KanjiCheckList
-                    list={gradeList}
-                    checkedList={checkedList}
-                    handleChange={handleChange}
-                  />
-                </section>
+                <KanjiCheckList
+                  grade={grade}
+                  list={gradeList}
+                  checkedList={checkedList}
+                  handleChange={handleChange}
+                  handleGradeChange={handleGradeChange}
+                />
               );
             })}
         </Box>
