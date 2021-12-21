@@ -15,6 +15,7 @@ const ExampleList: VFC<{
   const list = exampleList
     .map((e) =>
       e.map((x) => {
+        // TODO: プロジェクト内の型で判定できるようにする
         if (typeof x === 'string') {
           return x;
         }

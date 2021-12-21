@@ -7,15 +7,15 @@ const CheckBoxesParent: VFC<{
   name: string;
   label: string;
   childList: CheckBoxType[];
-  checkedList: string[];
-  handleChange: (id: string, isChecked: boolean) => void;
-}> = ({ id, name, label, childList, checkedList, handleChange }) => {
+  childCheckedList: string[];
+  handleChange: (childCheckedList: string[]) => void;
+}> = ({ id, name, label, childList, childCheckedList, handleChange }) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleChange(id, e.target.checked);
+    handleChange(e.target.checked ? childList.map((l) => l.id) : []);
   };
 
-  const hasAllChecked = childList.every((l) => checkedList.includes(l.id));
-  const hasSomeChecked = childList.some((l) => checkedList.includes(l.id));
+  const hasAllChecked = childList.every((l) => childCheckedList.includes(l.id));
+  const hasSomeChecked = childList.some((l) => childCheckedList.includes(l.id));
 
   return (
     <>
@@ -23,6 +23,7 @@ const CheckBoxesParent: VFC<{
         label={label}
         control={
           <Checkbox
+            id={id}
             name={name}
             checked={hasAllChecked}
             indeterminate={hasSomeChecked && !hasAllChecked}
@@ -39,7 +40,7 @@ const CheckBoxesParent: VFC<{
             id={l.id}
             name={l.name}
             label={l.label}
-            checked={checkedList.includes(l.id)}
+            checked={childCheckedList.includes(l.id)}
             key={l.id}
             handleChange={l.handleChange}
           />

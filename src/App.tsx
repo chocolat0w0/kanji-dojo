@@ -2,30 +2,33 @@ import React, { useState, VFC } from 'react';
 import ExampleList from 'components/organisms/ExampleList';
 import { Box, Typography } from '@material-ui/core';
 import { kanjiList } from './data/KanjiList';
-import KanjiCheckList from './components/organisms/KanjiCheckList';
+import GradeCheckList from './components/organisms/GradeCheckList';
 import './App.css';
 
 const App: VFC = () => {
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [checkedList, setCheckedList] = useState<
+    { grade: number; checkedIds: string[] }[]
+  >(
+    [...Array(6).keys()]
+      .map((i) => i + 1)
+      .map((grade) => ({ grade, checkedIds: [] })),
+  );
 
-  const handleGradeChange = (id: string, isChecked: boolean) => {
-    const gradeKanjiList = kanjiList
-      .filter((k) => k.grade.toString() === id.split('grade-')[1])
-      .map((k) => k.id);
-
-    setCheckedList((l) =>
-      isChecked
-        ? [...new Set([...l, ...gradeKanjiList])]
-        : l.filter((i) => !gradeKanjiList.includes(i)),
-    );
+  const handleChange = (grade: number, checkedIds: string[]) => {
+    setCheckedList((l) => [
+      ...l.filter((x) => x.grade !== grade),
+      { grade, checkedIds },
+    ]);
   };
 
-  const handleChange = (id: string, isChecked: boolean) => {
-    setCheckedList((l) => (isChecked ? [...l, id] : l.filter((i) => i !== id)));
-  };
-
+  // TODO:checkedListが変わった時に変更する
   const checkedKanjiList = kanjiList
-    .filter((l) => checkedList.includes(l.id))
+    .filter((l) =>
+      checkedList
+        .map((x) => x.checkedIds)
+        .flat()
+        .includes(l.id),
+    )
     .map((l) => l.ji);
 
   return (
@@ -45,12 +48,14 @@ const App: VFC = () => {
               const gradeList = kanjiList.filter((k) => k.grade === grade);
 
               return (
-                <KanjiCheckList
+                <GradeCheckList
+                  key={`grade-${grade}`}
                   grade={grade}
                   list={gradeList}
-                  checkedList={checkedList}
+                  checkedList={
+                    checkedList.find((l) => l.grade === grade)?.checkedIds || []
+                  }
                   handleChange={handleChange}
-                  handleGradeChange={handleGradeChange}
                 />
               );
             })}
