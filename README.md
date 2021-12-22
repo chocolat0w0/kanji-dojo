@@ -46,6 +46,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 # ディレクトリ構成
+Atomic Design を参考にする。以下気をつけながら分ける。
 ## components
 ### atoms
 - 最小単位のパーツ
@@ -63,3 +64,16 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ### templates
 - organisms, moleculesを使ってレイアウトを決める
 - ロジックは持たない
+
+### pages
+- ページ
+- 現状 App だけ。後で分離(TODO)
+
+# テスト
+参考ページ
+https://testing-library.com/docs/
+
+# 思ったことメモ
+- React は単方向バインドなので、Vue と違ってステータスの更新は自分で書く。
+- 型は定義できるが typeof はプリミティブ型。型判定できるキーをつける。(TODO)
+-

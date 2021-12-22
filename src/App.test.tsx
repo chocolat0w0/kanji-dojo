@@ -1,9 +1,20 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders no exam', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  expect(
+    screen.getByText('問題文').closest('section')?.querySelectorAll('li')
+      .length,
+  ).toBe(0);
+});
+test('renders exam', () => {
+  render(<App />);
+
+  fireEvent.click(screen.getByLabelText('一'));
+  expect(screen.getByText(/はな.*/).textContent).toBe(
+    'はなが一つ(ひとつ)さいた。',
+  );
 });

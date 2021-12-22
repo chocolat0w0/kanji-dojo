@@ -42,6 +42,7 @@ const App: VFC = () => {
           <Typography variant="h4" gutterBottom component="h1">
             漢字リスト
           </Typography>
+          {/* TODO: organisms に分離 */}
           {[...Array(6).keys()]
             .map((i) => i + 1)
             .map((grade) => {
