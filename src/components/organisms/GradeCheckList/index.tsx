@@ -1,11 +1,11 @@
 import { Typography } from '@material-ui/core';
 import CheckBoxesParent from 'components/molecules/CheckBoxesParent';
 import { useState, VFC } from 'react';
-import { Kanji } from '../../../data/KanjiList';
+import type KanjiType from '../../../data/KanjiList';
 
 const GradeCheckList: VFC<{
   grade: number;
-  list: Kanji[];
+  list: KanjiType[];
   checkedList: string[];
   handleChange: (grade: number, checkedIds: string[]) => void;
 }> = ({ grade, list, checkedList, handleChange }) => {

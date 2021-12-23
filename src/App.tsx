@@ -1,11 +1,16 @@
-import React, { useState, VFC } from 'react';
+import React, { useEffect, useState, VFC } from 'react';
 import ExampleList from 'components/organisms/ExampleList';
 import { Box, Typography } from '@material-ui/core';
-import { kanjiList } from './data/KanjiList';
+import type KanjiType from './data/KanjiList';
 import GradeCheckList from './components/organisms/GradeCheckList';
 import './App.css';
 
 const App: VFC = () => {
+  const [isKanjiListLoaded, setIsKanjiListLoaded] = useState(false);
+  const [kanjiList, setKanjiList] = useState<KanjiType[]>([]);
+  const [errorFetchKanjiList, setErrorFetchKanjiList] = useState<Error | null>(
+    null,
+  );
   const [checkedList, setCheckedList] = useState<
     { grade: number; checkedIds: string[] }[]
   >(
@@ -21,6 +26,25 @@ const App: VFC = () => {
     ]);
   };
 
+  // AJAX と API：https://ja.reactjs.org/docs/faq-ajax.html
+  useEffect(() => {
+    fetch(`${process.env.PUBLIC_URL}/assets/json/kanji_list.json`)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsKanjiListLoaded(true);
+          setKanjiList(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          setIsKanjiListLoaded(true);
+          setErrorFetchKanjiList(error);
+        },
+      );
+  }, []);
+
   // TODO:checkedListが変わった時に変更する
   const checkedKanjiList = kanjiList
     .filter((l) =>
@@ -30,6 +54,14 @@ const App: VFC = () => {
         .includes(l.id),
     )
     .map((l) => l.ji);
+
+  if (errorFetchKanjiList) {
+    return <p>Error: {errorFetchKanjiList.message}</p>;
+  }
+
+  if (!isKanjiListLoaded) {
+    return <p>loading...</p>;
+  }
 
   return (
     <div className="App">
