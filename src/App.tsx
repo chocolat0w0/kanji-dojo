@@ -1,85 +1,15 @@
-import React, { useEffect, useState, VFC } from 'react';
+import React, { useState, VFC } from 'react';
 import ExampleList from 'components/organisms/ExampleList';
 import { Box, Typography } from '@material-ui/core';
-import type KanjiType from './data/KanjiList';
-import GradeCheckList from './components/organisms/GradeCheckList';
+import KanjiList from './components/organisms/KanjiList';
 import './App.css';
 
 const App: VFC = () => {
-  const [isKanjiListLoaded, setIsKanjiListLoaded] = useState(false);
-  const [kanjiList, setKanjiList] = useState<KanjiType[]>([]);
-  const [errorFetchKanjiList, setErrorFetchKanjiList] = useState<Error | null>(
-    null,
-  );
-  const [checkedList, setCheckedList] = useState<
-    { grade: number; checkedIds: string[] }[]
-  >(
-    [...Array(6).keys()]
-      .map((i) => i + 1)
-      .map((grade) => ({ grade, checkedIds: [] })),
-  );
-
-  const handleChange = (grade: number, checkedIds: string[]) => {
-    setCheckedList((l) => [
-      ...l.filter((x) => x.grade !== grade),
-      { grade, checkedIds },
-    ]);
+  const [checkedKanjiList, setCheckedKanjiList] = useState<string[]>([]);
+  const setCheckedKanji = (list: string[]) => {
+    setCheckedKanjiList(list);
+    console.log(list);
   };
-
-  // AJAX と API：https://ja.reactjs.org/docs/faq-ajax.html
-  useEffect(() => {
-    fetch(`${process.env.PUBLIC_URL}/assets/json/kanji_list.json`)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsKanjiListLoaded(true);
-          setKanjiList(result);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsKanjiListLoaded(true);
-          setErrorFetchKanjiList(error);
-        },
-      );
-  }, []);
-
-  // TODO:checkedListが変わった時に変更する
-  const checkedKanjiList = kanjiList
-    .filter((l) =>
-      checkedList
-        .map((x) => x.checkedIds)
-        .flat()
-        .includes(l.id),
-    )
-    .map((l) => l.ji);
-
-  if (errorFetchKanjiList) {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>漢字道場</h1>
-        </header>
-        <Box component="main" p="30px">
-          <p>Error: {errorFetchKanjiList.message}</p>;
-        </Box>
-      </div>
-    );
-  }
-
-  if (!isKanjiListLoaded) {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>漢字道場</h1>
-        </header>
-        <Box component="main" p="30px">
-          <p>loading...</p>;
-        </Box>
-      </div>
-    );
-  }
 
   return (
     <div className="App">
@@ -92,24 +22,7 @@ const App: VFC = () => {
           <Typography variant="h4" gutterBottom component="h1">
             漢字リスト
           </Typography>
-          {/* TODO: organisms に分離 */}
-          {[...Array(6).keys()]
-            .map((i) => i + 1)
-            .map((grade) => {
-              const gradeList = kanjiList.filter((k) => k.grade === grade);
-
-              return (
-                <GradeCheckList
-                  key={`grade-${grade}`}
-                  grade={grade}
-                  list={gradeList}
-                  checkedList={
-                    checkedList.find((l) => l.grade === grade)?.checkedIds || []
-                  }
-                  handleChange={handleChange}
-                />
-              );
-            })}
+          <KanjiList setCheckedKanji={setCheckedKanji} />
         </Box>
 
         {/* 学習対象にした漢字を表示 (検証用、最後に削除) */}

@@ -9,9 +9,9 @@ test('初期表示：漢字リストが表示され、問題文に何も表示�
 
   // await の場合は get〜 ではなく find〜
   // https://testing-library.com/docs/dom-testing-library/api-async/
-  const kanjiItem = await screen.findByText('漢字リスト');
+  const kanjiItem = await screen.findByText('1年の漢字');
   expect(kanjiItem.closest('section')?.querySelectorAll('input').length).toBe(
-    7,
+    2,
   );
   expect(screen.queryByLabelText('一')).toBeInTheDocument();
   expect(screen.queryByLabelText('二')).not.toBeInTheDocument();
