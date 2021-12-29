@@ -56,11 +56,29 @@ const App: VFC = () => {
     .map((l) => l.ji);
 
   if (errorFetchKanjiList) {
-    return <p>Error: {errorFetchKanjiList.message}</p>;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>漢字道場</h1>
+        </header>
+        <Box component="main" p="30px">
+          <p>Error: {errorFetchKanjiList.message}</p>;
+        </Box>
+      </div>
+    );
   }
 
   if (!isKanjiListLoaded) {
-    return <p>loading...</p>;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>漢字道場</h1>
+        </header>
+        <Box component="main" p="30px">
+          <p>loading...</p>;
+        </Box>
+      </div>
+    );
   }
 
   return (
