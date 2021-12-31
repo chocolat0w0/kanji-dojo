@@ -1,28 +1,17 @@
 import { Typography } from '@material-ui/core';
 import CheckBoxesParent from 'components/molecules/CheckBoxesParent';
-import { useState, VFC } from 'react';
+import { VFC } from 'react';
 import type KanjiType from '../../../data/KanjiListType';
+import useGradeCheckList from './index.hooks';
 
 const GradeCheckList: VFC<{
   grade: number;
   list: KanjiType[];
   checkedList: string[];
-  handleChange: (grade: number, checkedIds: string[]) => void;
+  handleChange: (checkedIds: string[]) => void;
 }> = ({ grade, list, checkedList, handleChange }) => {
-  const [gradeCheckedList, setGradeCheckedList] = useState(checkedList);
-
-  const handleGradeChange = (childCheckedList: string[]) => {
-    setGradeCheckedList((_) => childCheckedList);
-    handleChange(grade, childCheckedList);
-  };
-
-  const handleChildChange = (id: string, isChecked: boolean) => {
-    const newCheckedList = isChecked
-      ? [...new Set([...gradeCheckedList, id])]
-      : gradeCheckedList.filter((x) => x !== id);
-    setGradeCheckedList((_) => newCheckedList);
-    handleChange(grade, newCheckedList);
-  };
+  const { gradeCheckedList, handleGradeChange, handleChildChange } =
+    useGradeCheckList(checkedList, handleChange);
 
   return (
     <section key={`grade${grade}`}>

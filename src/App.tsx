@@ -8,7 +8,6 @@ const App: VFC = () => {
   const [checkedKanjiList, setCheckedKanjiList] = useState<string[]>([]);
   const setCheckedKanji = (list: string[]) => {
     setCheckedKanjiList(list);
-    console.log(list);
   };
 
   return (
