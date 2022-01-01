@@ -1,12 +1,8 @@
-type OnyomiType = {
-  yomi: string;
-  okuri?: string;
-};
 type KanjiType = {
   id: string;
   ji: string;
   kun: string[];
-  on: OnyomiType[];
+  on: string[];
   grade: number;
 };
 export default KanjiType;
