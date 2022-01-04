@@ -7,7 +7,7 @@ import './App.css';
 const App: VFC = () => {
   const [checkedKanjiList, setCheckedKanjiList] = useState<string[]>([]);
   const setCheckedKanji = (list: string[]) => {
-    setCheckedKanjiList(list);
+    setCheckedKanjiList(() => list);
   };
 
   return (

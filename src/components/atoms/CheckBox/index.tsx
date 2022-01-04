@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel } from '@material-ui/core';
-import { VFC } from 'react';
+import { memo, VFC } from 'react';
 
 type CheckBoxType = {
   id: string;
@@ -8,6 +8,9 @@ type CheckBoxType = {
   checked?: boolean;
   handleChange: (id: string, isChecked: boolean) => void;
 };
+
+const areEqual = (prev: CheckBoxType, next: CheckBoxType) =>
+  prev.checked === next.checked;
 
 const CheckBox: VFC<CheckBoxType> = ({
   id,
@@ -36,4 +39,4 @@ const CheckBox: VFC<CheckBoxType> = ({
 };
 
 export type { CheckBoxType };
-export default CheckBox;
+export default memo(CheckBox, areEqual);

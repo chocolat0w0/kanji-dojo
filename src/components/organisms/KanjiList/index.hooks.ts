@@ -25,21 +25,24 @@ const useKanjiList = (
 
   // 1学年分の選択リストをもらって全学年のリストを更新する
   const handleChange = (grade: number) => (checkedIds: string[]) => {
-    const list = [
-      ...checkedList.filter((x) => x.grade !== grade),
-      { grade, checkedIds },
-    ];
-    setCheckedList((_) => list);
-    setCheckedKanji(
-      kanjiList
-        .filter((l) =>
-          list
-            .map((x) => x.checkedIds)
-            .flat()
-            .includes(l.id),
-        )
-        .map((l) => l.ji),
-    );
+    setCheckedList((prev) => {
+      const list = [
+        ...prev.filter((x) => x.grade !== grade),
+        { grade, checkedIds },
+      ];
+      setCheckedKanji(
+        kanjiList
+          .filter((l) =>
+            list
+              .map((x) => x.checkedIds)
+              .flat()
+              .includes(l.id),
+          )
+          .map((l) => l.ji),
+      );
+
+      return list;
+    });
   };
 
   // AJAX と API：https://ja.reactjs.org/docs/faq-ajax.html
@@ -47,16 +50,16 @@ const useKanjiList = (
     fetch(`${process.env.PUBLIC_URL}/assets/json/kanji_list.json`)
       .then((res) => res.json())
       .then(
-        (result) => {
-          setIsKanjiListLoaded(true);
-          setKanjiList(result);
+        (result: KanjiType[]) => {
+          setIsKanjiListLoaded(() => true);
+          setKanjiList(() => result);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
-        (error) => {
-          setIsKanjiListLoaded(true);
-          setErrorFetchKanjiList(error);
+        (error: Error) => {
+          setIsKanjiListLoaded(() => true);
+          setErrorFetchKanjiList(() => error);
         },
       );
   }, []);

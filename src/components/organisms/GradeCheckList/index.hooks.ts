@@ -11,16 +11,23 @@ const useGradeCheckList = (
   const [gradeCheckedList, setGradeCheckedList] = useState(checkedList);
 
   const handleGradeChange = (childCheckedList: string[]) => {
-    setGradeCheckedList((_) => childCheckedList);
-    handleChange(childCheckedList);
+    setGradeCheckedList(() => {
+      handleChange(childCheckedList);
+
+      return childCheckedList;
+    });
   };
 
   const handleChildChange = (id: string, isChecked: boolean) => {
-    const newCheckedList = isChecked
-      ? [...new Set([...gradeCheckedList, id])]
-      : gradeCheckedList.filter((x) => x !== id);
-    setGradeCheckedList((_) => newCheckedList);
-    handleChange(newCheckedList);
+    setGradeCheckedList((prev) => {
+      const newCheckedList = isChecked
+        ? [...new Set([...prev, id])]
+        : prev.filter((x) => x !== id);
+
+      handleChange(newCheckedList);
+
+      return newCheckedList;
+    });
   };
 
   return { gradeCheckedList, handleGradeChange, handleChildChange };
