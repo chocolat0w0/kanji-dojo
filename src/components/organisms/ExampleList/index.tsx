@@ -15,11 +15,10 @@ const ExampleList: VFC<{
   const list = exampleList
     .map((e) =>
       e.map((x) => {
-        // TODO: プロジェクト内の型で判定できるようにする
-        if (typeof x === 'string') {
-          return x;
+        if (x.type === 'kana') {
+          return x.value;
         }
-        const [ji, yomi] = x;
+        const [ji, yomi] = x.value;
 
         return targetList.filter((t) => ji.includes(t)).length
           ? [ji, yomi]
