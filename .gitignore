@@ -24,5 +24,4 @@ yarn-error.log*
 
 # tools
 /tools/fetch_kanji_list/kanji_list.json
-/tools/fetch_kanji_list/node_modules
-/tools/fetch_morph_api/node_modules
+/tools/**/node_modules

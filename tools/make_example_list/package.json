@@ -1,0 +1,36 @@
+{
+  "name": "make_example_list",
+  "version": "1.0.0",
+  "description": "[形態素解析による自動振り仮名](../tools/fetch_morph_api/out/exam_list_morph.json) に加工を加えて、問題文として期待する区切りで振り仮名を付与したデータを作ります。",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "exec": "ts-node ./src/make_example_list.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.7",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/*.test.ts"
+    ]
+  }
+}
