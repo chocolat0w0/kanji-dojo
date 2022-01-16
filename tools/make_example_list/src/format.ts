@@ -42,4 +42,21 @@ const format = (sentence: (string[] | string[][])[]): string[][] =>
     })
     .flat(1);
 
-export { join, zip, devide, format };
+const kanaToHira = (str: string): string =>
+  str.replace(/[\u30a1-\u30f6]/g, (match) => {
+    const chr = match.charCodeAt(0) - 0x60;
+
+    return String.fromCharCode(chr);
+  });
+
+type KanjiPart = { t: 'kanji'; v: string[] };
+type KanaPart = { t: 'kana'; v: string };
+type exampleType = (KanjiPart | KanaPart)[];
+const getJson = (sentence: string[][]): exampleType =>
+  sentence.map((x) =>
+    /[\u4E00-\u9FFF]/.test(x[0]) // 漢字の正規表現
+      ? { t: 'kanji', v: [x[0], kanaToHira(x[1])] }
+      : { t: 'kana', v: x[0] },
+  );
+
+export { join, zip, devide, format, getJson };

@@ -1,29 +1,29 @@
-type KanjiPart = { type: 'kanji'; value: [string, string] };
-type KanaPart = { type: 'kana'; value: string };
+type KanjiPart = { t: 'kanji'; v: [string, string] };
+type KanaPart = { t: 'kana'; v: string };
 type exampleType = (KanjiPart | KanaPart)[];
 const exampleList: exampleType[] = [
   [
-    { type: 'kanji', value: ['花', 'はな'] },
-    { type: 'kana', value: 'が' },
-    { type: 'kanji', value: ['一つ', 'ひとつ'] },
-    { type: 'kanji', value: ['咲いた', 'さいた'] },
-    { type: 'kana', value: '。' },
+    { t: 'kanji', v: ['花', 'はな'] },
+    { t: 'kana', v: 'が' },
+    { t: 'kanji', v: ['一つ', 'ひとつ'] },
+    { t: 'kanji', v: ['咲いた', 'さいた'] },
+    { t: 'kana', v: '。' },
   ],
   [
-    { type: 'kanji', value: ['答え', 'こたえ'] },
-    { type: 'kana', value: 'を' },
-    { type: 'kanji', value: ['二つ', 'ふたつ'] },
-    { type: 'kanji', value: ['伝えた', 'つたえた'] },
-    { type: 'kana', value: '。' },
+    { t: 'kanji', v: ['答え', 'こたえ'] },
+    { t: 'kana', v: 'を' },
+    { t: 'kanji', v: ['二つ', 'ふたつ'] },
+    { t: 'kanji', v: ['伝えた', 'つたえた'] },
+    { t: 'kana', v: '。' },
   ],
   [
-    { type: 'kanji', value: ['今日', 'きょう'] },
-    { type: 'kana', value: 'のご' },
-    { type: 'kanji', value: ['飯', 'はん'] },
-    { type: 'kana', value: 'は' },
-    { type: 'kanji', value: ['焼き', 'やき'] },
-    { type: 'kanji', value: ['魚', 'ざかな'] },
-    { type: 'kana', value: 'です。' },
+    { t: 'kanji', v: ['今日', 'きょう'] },
+    { t: 'kana', v: 'のご' },
+    { t: 'kanji', v: ['飯', 'はん'] },
+    { t: 'kana', v: 'は' },
+    { t: 'kanji', v: ['焼き', 'やき'] },
+    { t: 'kanji', v: ['魚', 'ざかな'] },
+    { t: 'kana', v: 'です。' },
   ],
 ];
 

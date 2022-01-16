@@ -15,10 +15,10 @@ const ExampleList: VFC<{
   const list = exampleList
     .map((e) =>
       e.map((x) => {
-        if (x.type === 'kana') {
-          return x.value;
+        if (x.t === 'kana') {
+          return x.v;
         }
-        const [ji, yomi] = x.value;
+        const [ji, yomi] = x.v;
 
         return targetList.filter((t) => ji.includes(t)).length
           ? [ji, yomi]
