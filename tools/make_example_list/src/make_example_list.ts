@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import format from './format';
+import { format } from './format';
 
 const INPUT_FILE_PATH = './exam_list_morph.json';
 
