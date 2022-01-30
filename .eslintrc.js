@@ -86,6 +86,10 @@ module.exports = {
         classPropertiesAllowed: false,
       },
     ],
+    'react/function-component-definition': [
+      2,
+      { namedComponents: 'arrow-function' },
+    ],
     'react/jsx-filename-extension': [
       'error',
       {

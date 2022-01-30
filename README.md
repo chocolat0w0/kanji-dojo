@@ -2,6 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## 初期設定
+動作確認済み環境
+- node v17.4.0, npm 8.3.1 (m1 Mac) 動かない
+- yarnインストール済み
+
+前環境（逆に動かなくなったかも）
+- node v14.4.0
+
+初期設定
+`% yarn`
+
 ## Available Scripts
 
 In the project directory, you can run:
