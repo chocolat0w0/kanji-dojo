@@ -47,7 +47,7 @@
 
 ## 実行
 ```
-> npm run exec > output.json
+> npm run exec
 ```
 
 `out/exam_list.json`にプロジェクトで使う形式の問題文が出力されます。
