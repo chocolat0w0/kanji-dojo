@@ -1,7 +1,7 @@
 import KanjiType from 'data/KanjiListType';
 import { useEffect, useState } from 'react';
 
-const useKanjiList = (
+const useKanjiCheckList = (
   setCheckedKanji: (list: string[]) => void,
 ): {
   errorFetchKanjiList: Error | null;
@@ -47,21 +47,33 @@ const useKanjiList = (
 
   // AJAX と API：https://ja.reactjs.org/docs/faq-ajax.html
   useEffect(() => {
+    // mount状態か確認する
+    let isMounted = true;
+
     fetch(`${process.env.PUBLIC_URL}/assets/json/kanji_list.json`)
       .then((res) => res.json())
       .then(
         (result: KanjiType[]) => {
-          setIsKanjiListLoaded(() => true);
-          setKanjiList(() => result);
+          if (isMounted) {
+            setIsKanjiListLoaded(() => true);
+            setKanjiList(() => result);
+          }
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error: Error) => {
-          setIsKanjiListLoaded(() => true);
-          setErrorFetchKanjiList(() => error);
+          if (isMounted) {
+            setIsKanjiListLoaded(() => true);
+            setErrorFetchKanjiList(() => error);
+          }
         },
       );
+
+    return () => {
+      // 途中でunmountされたらfetch後の操作をさせない
+      isMounted = false;
+    };
   }, []);
 
   return {
@@ -73,4 +85,4 @@ const useKanjiList = (
   };
 };
 
-export default useKanjiList;
+export default useKanjiCheckList;

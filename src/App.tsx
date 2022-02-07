@@ -2,7 +2,7 @@ import React, { useEffect, useState, VFC } from 'react';
 import { useLocation } from 'react-router-dom';
 import ExampleList from 'components/organisms/ExampleList';
 import { Box, Typography } from '@material-ui/core';
-import KanjiList from './components/organisms/KanjiList';
+import KanjiCheckList from './components/organisms/KanjiCheckList';
 import './App.css';
 
 const App: VFC = () => {
@@ -30,11 +30,11 @@ const App: VFC = () => {
           <Typography variant="h4" gutterBottom component="h1">
             漢字リスト
           </Typography>
-          {/* {isCountMode ? (
+          {isCountMode ? (
             <div>Count Mode</div>
-          ) : ( */}
-          <KanjiList setCheckedKanji={setCheckedKanji} />
-          {/* )} */}
+          ) : (
+            <KanjiCheckList setCheckedKanji={setCheckedKanji} />
+          )}
         </Box>
 
         {/* 学習対象にした漢字を表示 (検証用、最後に削除) */}

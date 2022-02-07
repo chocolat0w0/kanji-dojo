@@ -1,8 +1,8 @@
 import { VFC } from 'react';
 import GradeCheckList from '../GradeCheckList';
-import useKanjiList from './index.hooks';
+import useKanjiCheckList from './index.hooks';
 
-const KanjiList: VFC<{
+const KanjiCheckList: VFC<{
   setCheckedKanji: (list: string[]) => void;
 }> = ({ setCheckedKanji }) => {
   const {
@@ -11,7 +11,7 @@ const KanjiList: VFC<{
     kanjiList,
     checkedList,
     handleChange,
-  } = useKanjiList(setCheckedKanji);
+  } = useKanjiCheckList(setCheckedKanji);
 
   if (errorFetchKanjiList) {
     return <p>Error: {errorFetchKanjiList.message}</p>;
@@ -43,4 +43,4 @@ const KanjiList: VFC<{
     </>
   );
 };
-export default KanjiList;
+export default KanjiCheckList;
