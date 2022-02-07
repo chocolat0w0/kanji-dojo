@@ -1,9 +1,14 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
 test('初期表示：漢字リストが表示され、問題文に何も表示されない', async () => {
-  render(<App />);
+  render(
+    <Router>
+      <App />
+    </Router>,
+  );
 
   // await の場合は get〜 ではなく find〜
   // https://testing-library.com/docs/dom-testing-library/api-async/
@@ -18,7 +23,11 @@ test('初期表示：漢字リストが表示され、問題文に何も表示�
 });
 
 test('「一」を選んだら問題文に「一」を含む問題が表示される', async () => {
-  render(<App />);
+  render(
+    <Router>
+      <App />
+    </Router>,
+  );
 
   fireEvent.click(await screen.findByLabelText('一'));
   expect(screen.getByText(/はな.*/).textContent).toBe(

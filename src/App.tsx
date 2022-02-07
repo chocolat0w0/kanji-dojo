@@ -1,4 +1,5 @@
-import React, { useState, VFC } from 'react';
+import React, { useEffect, useState, VFC } from 'react';
+import { useLocation } from 'react-router-dom';
 import ExampleList from 'components/organisms/ExampleList';
 import { Box, Typography } from '@material-ui/core';
 import KanjiList from './components/organisms/KanjiList';
@@ -9,6 +10,14 @@ const App: VFC = () => {
   const setCheckedKanji = (list: string[]) => {
     setCheckedKanjiList(() => list);
   };
+
+  const [isCountMode, setIsCountMode] = useState(false);
+  const location = useLocation();
+  useEffect(
+    () => setIsCountMode(location.search.includes('count=1')),
+    [location],
+  );
+  console.log(isCountMode);
 
   return (
     <div className="App">
@@ -21,7 +30,11 @@ const App: VFC = () => {
           <Typography variant="h4" gutterBottom component="h1">
             漢字リスト
           </Typography>
+          {/* {isCountMode ? (
+            <div>Count Mode</div>
+          ) : ( */}
           <KanjiList setCheckedKanji={setCheckedKanji} />
+          {/* )} */}
         </Box>
 
         {/* 学習対象にした漢字を表示 (検証用、最後に削除) */}
