@@ -14,7 +14,7 @@ test('初期表示：漢字リストが表示され、問題文に何も表示�
   // https://testing-library.com/docs/dom-testing-library/api-async/
   const kanjiItem = await screen.findByText('1年の漢字');
   expect(kanjiItem.closest('section')?.querySelectorAll('input').length).toBe(
-    2,
+    4,
   );
   expect(screen.queryByLabelText('一')).toBeInTheDocument();
   expect(screen.queryByLabelText('二')).not.toBeInTheDocument();
@@ -31,6 +31,6 @@ test('「一」を選んだら問題文に「一」を含む問題が表示さ�
 
   fireEvent.click(await screen.findByLabelText('一'));
   expect(screen.getByText(/はな.*/).textContent).toBe(
-    'はなが一つ(ひとつ)さいた。',
+    'はなが一つ(ひとつ)さいた',
   );
 });

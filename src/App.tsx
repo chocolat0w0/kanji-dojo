@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import ExampleList from 'components/organisms/ExampleList';
 import { Box, Typography } from '@material-ui/core';
 import KanjiCheckList from './components/organisms/KanjiCheckList';
+import KanjiCountList from './components/organisms/KanjiCountList';
 import './App.css';
 
 const App: VFC = () => {
@@ -17,7 +18,6 @@ const App: VFC = () => {
     () => setIsCountMode(location.search.includes('count=1')),
     [location],
   );
-  console.log(isCountMode);
 
   return (
     <div className="App">
@@ -31,7 +31,7 @@ const App: VFC = () => {
             漢字リスト
           </Typography>
           {isCountMode ? (
-            <div>Count Mode</div>
+            <KanjiCountList />
           ) : (
             <KanjiCheckList setCheckedKanji={setCheckedKanji} />
           )}
