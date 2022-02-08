@@ -1,31 +1,13 @@
-import exampleList from 'data/ExampleList';
-import { useEffect, useState, VFC } from 'react';
+import { VFC } from 'react';
 import { Button } from '@material-ui/core';
 import './index.css';
+import useExampleList from './index.hooks';
 
 const ExampleList: VFC<{
   targetList: string[];
 }> = ({ targetList }) => {
-  const [canCheckAnswer, setCanCheckAnswer] = useState(false);
-
-  useEffect(() => {
-    setCanCheckAnswer(false);
-  }, [targetList]);
-
-  const list = exampleList
-    .map((e) =>
-      e.map((x) => {
-        if (x.t === 'kana') {
-          return x.v;
-        }
-        const [ji, yomi] = x.v;
-
-        return targetList.filter((t) => ji.includes(t)).length
-          ? [ji, yomi]
-          : yomi;
-      }),
-    )
-    .filter((e) => e.find((x) => typeof x !== 'string'));
+  const { canCheckAnswer, setCanCheckAnswer, list } =
+    useExampleList(targetList);
 
   return (
     <>

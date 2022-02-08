@@ -1,7 +1,7 @@
 type KanjiPart = { t: 'kanji'; v: [string, string] };
 type KanaPart = { t: 'kana'; v: string };
-type exampleType = (KanjiPart | KanaPart)[];
-const exampleList: exampleType[] = [
+type ExampleType = (KanjiPart | KanaPart)[];
+const exampleList: ExampleType[] = [
   [
     { t: 'kanji', v: ['漢', 'かん'] },
     { t: 'kanji', v: ['字', 'じ'] },
@@ -10909,4 +10909,4 @@ const exampleList: exampleType[] = [
 ];
 
 export default exampleList;
-export type { exampleType, KanaPart, KanjiPart };
+export type { ExampleType, KanaPart, KanjiPart };
