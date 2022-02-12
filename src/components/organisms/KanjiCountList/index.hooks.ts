@@ -1,21 +1,34 @@
 import KanjiType from 'data/KanjiListType';
 import useFetchKanjiList from '../../hooks/useFetchKanjiList.hooks';
+import useFetchExampleList from '../../hooks/useFetchExampleList.hooks';
 
 const useKanjiCountList = (): {
-  errorFetchKanjiList: Error | null;
-  isKanjiListLoaded: boolean;
+  errorFetch: Error | null;
+  isLoaded: boolean;
   kanjiList: KanjiType[];
   countExam: (ji: string) => number;
 } => {
   const { errorFetchKanjiList, isKanjiListLoaded, kanjiList } =
     useFetchKanjiList();
 
-  const countExam = (ji: string): number => ji.length;
-  // TODO: 問題文ファイルを読み込んで、漢字の出現数を数える
+  const { errorFetchExampleList, isExampleListLoaded, exampleList } =
+    useFetchExampleList();
+
+  const countExam = (ji: string): number =>
+    exampleList.filter(
+      (l) =>
+        l
+          .filter((v) => v.t === 'kanji')
+          .map((v) => v.v[0])
+          .filter((v) => v.includes(ji)).length,
+    ).length;
+
+  const errorFetch = errorFetchKanjiList && errorFetchExampleList;
+  const isLoaded = isKanjiListLoaded && isExampleListLoaded;
 
   return {
-    errorFetchKanjiList,
-    isKanjiListLoaded,
+    errorFetch,
+    isLoaded,
     kanjiList,
     countExam,
   };

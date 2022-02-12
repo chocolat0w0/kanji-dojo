@@ -2,14 +2,13 @@ import { VFC } from 'react';
 import useKanjiCountList from './index.hooks';
 
 const KanjiCountList: VFC = () => {
-  const { errorFetchKanjiList, isKanjiListLoaded, kanjiList, countExam } =
-    useKanjiCountList();
+  const { errorFetch, isLoaded, kanjiList, countExam } = useKanjiCountList();
 
-  if (errorFetchKanjiList) {
-    return <p>Error: {errorFetchKanjiList.message}</p>;
+  if (errorFetch) {
+    return <p>Error: {errorFetch.message}</p>;
   }
 
-  if (!isKanjiListLoaded) {
+  if (!isLoaded) {
     return <p>loading...</p>;
   }
 

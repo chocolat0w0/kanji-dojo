@@ -30,7 +30,7 @@ test('「一」を選んだら問題文に「一」を含む問題が表示さ�
   );
 
   fireEvent.click(await screen.findByLabelText('一'));
-  expect(screen.getByText(/はな.*/).textContent).toBe(
+  expect((await screen.findByText(/はな.*/)).textContent).toBe(
     'はなが一つ(ひとつ)さいた',
   );
 });
