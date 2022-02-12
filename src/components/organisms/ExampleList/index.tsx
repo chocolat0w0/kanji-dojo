@@ -6,8 +6,21 @@ import useExampleList from './index.hooks';
 const ExampleList: VFC<{
   targetList: string[];
 }> = ({ targetList }) => {
-  const { canCheckAnswer, setCanCheckAnswer, list } =
-    useExampleList(targetList);
+  const {
+    errorFetchExampleList,
+    isExampleListLoaded,
+    list,
+    canCheckAnswer,
+    setCanCheckAnswer,
+  } = useExampleList(targetList);
+
+  if (errorFetchExampleList) {
+    return <p>Error: {errorFetchExampleList.message}</p>;
+  }
+
+  if (!isExampleListLoaded) {
+    return <p>loading...</p>;
+  }
 
   return (
     <>
