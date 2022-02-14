@@ -1,0 +1,14 @@
+.kanji {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.exam-0 {
+  font-weight: bold;
+  color: red;
+}
+
+.exam-few {
+  font-weight: bold;
+  color: blue;
+}
