@@ -1,16 +1,19 @@
 import { useState } from 'react';
+import { CheckedType } from '../KanjiCheckList/index.hooks';
 
 const useGradeCheckList = (
-  checkedList: string[],
-  handleChange: (checkedIds: string[]) => void,
+  checkedList: { id: string; status: CheckedType }[],
+  handleChange: (
+    gradeCheckedList: { id: string; status: CheckedType }[],
+  ) => void,
 ): {
-  gradeCheckedList: string[];
-  handleGradeChange: (childCheckedList: string[]) => void;
+  gradeCheckedList: typeof checkedList;
+  handleGradeChange: (childCheckedList: typeof checkedList) => void;
   handleChildChange: (id: string, isChecked: boolean) => void;
 } => {
   const [gradeCheckedList, setGradeCheckedList] = useState(checkedList);
 
-  const handleGradeChange = (childCheckedList: string[]) => {
+  const handleGradeChange = (childCheckedList: typeof checkedList) => {
     setGradeCheckedList(() => {
       handleChange(childCheckedList);
 
@@ -20,9 +23,10 @@ const useGradeCheckList = (
 
   const handleChildChange = (id: string, isChecked: boolean) => {
     setGradeCheckedList((prev) => {
-      const newCheckedList = isChecked
-        ? [...new Set([...prev, id])]
-        : prev.filter((x) => x !== id);
+      const newCheckedList = [
+        ...prev.filter((l) => l.id !== id),
+        { id, status: isChecked ? CheckedType.MUST : CheckedType.FALSE },
+      ];
 
       handleChange(newCheckedList);
 

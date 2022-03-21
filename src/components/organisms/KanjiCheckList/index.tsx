@@ -33,9 +33,9 @@ const KanjiCheckList: VFC<{
               key={`grade-${grade}`}
               grade={grade}
               list={gradeList}
-              checkedList={
-                checkedList.find((l) => l.grade === grade)?.checkedIds || []
-              }
+              checkedList={checkedList
+                .filter((l) => l.grade === grade)
+                .map((l) => ({ id: l.id, status: l.status }))}
               handleChange={handleChange(grade)}
             />
           );

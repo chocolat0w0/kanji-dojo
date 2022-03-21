@@ -3,12 +3,15 @@ import CheckBoxesParent from 'components/molecules/CheckBoxesParent';
 import { VFC } from 'react';
 import type KanjiType from '../../../data/KanjiListType';
 import useGradeCheckList from './index.hooks';
+import { CheckedType } from '../KanjiCheckList/index.hooks';
 
 const GradeCheckList: VFC<{
   grade: number;
   list: KanjiType[];
-  checkedList: string[];
-  handleChange: (checkedIds: string[]) => void;
+  checkedList: { id: string; status: CheckedType }[];
+  handleChange: (
+    gradeCheckedList: { id: string; status: CheckedType }[],
+  ) => void;
 }> = ({ grade, list, checkedList, handleChange }) => {
   const { gradeCheckedList, handleGradeChange, handleChildChange } =
     useGradeCheckList(checkedList, handleChange);
@@ -26,7 +29,9 @@ const GradeCheckList: VFC<{
             label: l.ji,
             handleChange: handleChildChange,
           }))}
-          childCheckedList={gradeCheckedList}
+          childCheckedList={gradeCheckedList
+            .filter((l) => l.status !== CheckedType.FALSE)
+            .map((l) => l.id)}
           handleChange={handleGradeChange}
         />
       </Typography>

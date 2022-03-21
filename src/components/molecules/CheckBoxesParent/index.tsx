@@ -1,5 +1,6 @@
 import { Box, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckBox, { CheckBoxType } from 'components/atoms/CheckBox';
+import { CheckedType } from 'components/organisms/KanjiCheckList/index.hooks';
 import { VFC } from 'react';
 
 const CheckBoxesParent: VFC<{
@@ -8,10 +9,16 @@ const CheckBoxesParent: VFC<{
   label: string;
   childList: CheckBoxType[];
   childCheckedList: string[];
-  handleChange: (childCheckedList: string[]) => void;
+  handleChange: (
+    childCheckedList: { id: string; status: CheckedType }[],
+  ) => void;
 }> = ({ id, name, label, childList, childCheckedList, handleChange }) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleChange(e.target.checked ? childList.map((l) => l.id) : []);
+    handleChange(
+      e.target.checked
+        ? childList.map((l) => ({ id: l.id, status: CheckedType.MUST }))
+        : childList.map((l) => ({ id: l.id, status: CheckedType.FALSE })),
+    );
   };
 
   const hasAllChecked = childList.every((l) => childCheckedList.includes(l.id));

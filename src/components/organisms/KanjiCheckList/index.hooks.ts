@@ -2,47 +2,62 @@ import KanjiType from 'data/KanjiListType';
 import { useState } from 'react';
 import useFetchKanjiList from '../../hooks/useFetchKanjiList.hooks';
 
+export const CheckedType = {
+  FALSE: 'false',
+  MUST: 'must',
+  USABLE: 'usable',
+} as const;
+export type CheckedType = typeof CheckedType[keyof typeof CheckedType];
+
 const useKanjiCheckList = (
   setCheckedKanji: (list: string[]) => void,
 ): {
   errorFetchKanjiList: Error | null;
   isKanjiListLoaded: boolean;
   kanjiList: KanjiType[];
-  checkedList: { grade: number; checkedIds: string[] }[];
-  handleChange: (grade: number) => (checkedIds: string[]) => void;
+  checkedList: { id: string; grade: number; status: CheckedType }[];
+  handleChange: (
+    grade: number,
+  ) => (gradeCheckedList: { id: string; status: CheckedType }[]) => void;
 } => {
   const { errorFetchKanjiList, isKanjiListLoaded, kanjiList } =
     useFetchKanjiList();
 
   const [checkedList, setCheckedList] = useState<
-    { grade: number; checkedIds: string[] }[]
+    { id: string; grade: number; status: CheckedType }[]
   >(
-    [...Array(6).keys()]
-      .map((i) => i + 1)
-      .map((grade) => ({ grade, checkedIds: [] })),
+    kanjiList.map((i) => ({
+      id: i.id,
+      grade: i.grade,
+      status: CheckedType.FALSE,
+    })),
   );
 
   // 1学年分の選択リストをもらって全学年のリストを更新する
-  const handleChange = (grade: number) => (checkedIds: string[]) => {
-    setCheckedList((prev) => {
-      const list = [
-        ...prev.filter((x) => x.grade !== grade),
-        { grade, checkedIds },
-      ];
-      setCheckedKanji(
-        kanjiList
-          .filter((l) =>
-            list
-              .map((x) => x.checkedIds)
-              .flat()
-              .includes(l.id),
-          )
-          .map((l) => l.ji),
-      );
+  const handleChange =
+    (grade: number) =>
+    (gradeCheckedList: { id: string; status: CheckedType }[]) => {
+      setCheckedList((prev) => {
+        const newList = gradeCheckedList.map((x) => ({
+          id: x.id,
+          grade,
+          status: x.status,
+        }));
+        const list = [...prev.filter((x) => x.grade !== grade), ...newList];
 
-      return list;
-    });
-  };
+        // TODO: あとでMUST, USABLE分ける
+        const tmp = kanjiList
+          .filter(
+            (l) =>
+              (list.find((x) => x.id === l.id)?.status ?? CheckedType.FALSE) !==
+              CheckedType.FALSE,
+          )
+          .map((l) => l.ji);
+        setCheckedKanji(tmp);
+
+        return list;
+      });
+    };
 
   return {
     errorFetchKanjiList,
