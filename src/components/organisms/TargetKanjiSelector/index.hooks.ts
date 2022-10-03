@@ -1,6 +1,6 @@
 import KanjiType from 'data/KanjiListType';
 import { useState } from 'react';
-import useFetchKanjiList from '../../hooks/useFetchKanjiList.hooks';
+import useFetchKanjiList from '../../../hooks/useFetchKanjiList.hooks';
 
 export const CheckedType = {
   FALSE: 'false',

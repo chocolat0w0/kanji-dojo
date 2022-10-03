@@ -1,6 +1,6 @@
 import KanjiType from 'data/KanjiListType';
-import useFetchKanjiList from '../../hooks/useFetchKanjiList.hooks';
-import useFetchExampleList from '../../hooks/useFetchExampleList.hooks';
+import useFetchKanjiList from '../../../hooks/useFetchKanjiList.hooks';
+import useFetchExampleList from '../../../hooks/useFetchExampleList.hooks';
 
 const useKanjiCountList = (): {
   errorFetch: Error | null;

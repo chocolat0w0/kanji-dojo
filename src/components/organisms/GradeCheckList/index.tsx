@@ -3,7 +3,7 @@ import CheckBoxesParent from 'components/molecules/CheckBoxesParent';
 import { VFC } from 'react';
 import type KanjiType from '../../../data/KanjiListType';
 import useGradeCheckList from './index.hooks';
-import { CheckedType } from '../KanjiCheckList/index.hooks';
+import { CheckedType } from '../TargetKanjiSelector/index.hooks';
 
 const GradeCheckList: VFC<{
   grade: number;

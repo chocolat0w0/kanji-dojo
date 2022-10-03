@@ -1,6 +1,6 @@
 import { Box, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckBox, { CheckBoxType } from 'components/atoms/CheckBox';
-import { CheckedType } from 'components/organisms/KanjiCheckList/index.hooks';
+import { CheckedType } from 'components/organisms/TargetKanjiSelector/index.hooks';
 import { VFC } from 'react';
 
 const CheckBoxesParent: VFC<{

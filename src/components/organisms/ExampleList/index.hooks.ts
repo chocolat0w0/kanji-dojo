@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useFetchExampleList from '../../hooks/useFetchExampleList.hooks';
+import useFetchExampleList from '../../../hooks/useFetchExampleList.hooks';
 
 const useExampleList = (
   targetList: string[],

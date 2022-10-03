@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckedType } from '../KanjiCheckList/index.hooks';
+import { CheckedType } from '../TargetKanjiSelector/index.hooks';
 
 const useGradeCheckList = (
   checkedList: { id: string; status: CheckedType }[],

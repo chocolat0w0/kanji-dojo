@@ -10,7 +10,7 @@ type CheckBoxType = {
 };
 
 const areEqual = (prev: CheckBoxType, next: CheckBoxType) =>
-  prev.checked === next.checked;
+  prev.id === next.id && prev.checked === next.checked;
 
 const CheckBox: VFC<CheckBoxType> = ({
   id,
