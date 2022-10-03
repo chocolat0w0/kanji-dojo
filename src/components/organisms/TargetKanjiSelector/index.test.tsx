@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import server from 'mocks/server';
 import { rest } from 'msw';
-import KanjiCheckList from './index';
+import TargetKanjiSelector from './index';
 
 test('漢字リストjsonが返却されなかったらエラーが表示される', async () => {
   const setCheckedKanji = jest.fn();
@@ -15,7 +15,7 @@ test('漢字リストjsonが返却されなかったらエラーが表示され�
   );
 
   render(
-    <KanjiCheckList
+    <TargetKanjiSelector
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setCheckedKanji={setCheckedKanji}
     />,
@@ -27,7 +27,7 @@ test('漢字リストがチェックされたらイベントハンドラが呼�
   const setCheckedKanji = jest.fn();
 
   render(
-    <KanjiCheckList
+    <TargetKanjiSelector
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setCheckedKanji={setCheckedKanji}
     />,

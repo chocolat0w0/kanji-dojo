@@ -1,6 +1,6 @@
 import { Box, Typography } from '@material-ui/core';
 import ExampleList from 'components/organisms/ExampleList';
-import KanjiCheckList from 'components/organisms/TargetKanjiSelector';
+import TargetKanjiSelector from 'components/organisms/TargetKanjiSelector';
 import WithHeader from 'components/templates/WithHeader';
 import React, { useState, VFC } from 'react';
 
@@ -18,7 +18,7 @@ const Select: VFC = () => {
           <Typography variant="h4" gutterBottom component="h1">
             漢字リスト
           </Typography>
-          <KanjiCheckList setCheckedKanji={setCheckedKanji} />
+          <TargetKanjiSelector setCheckedKanji={setCheckedKanji} />
         </Box>
 
         {/* 学習対象にした漢字を表示 (検証用、最後に削除) */}

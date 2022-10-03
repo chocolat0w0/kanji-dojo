@@ -1,13 +1,7 @@
+import { CheckedType } from 'components/atoms/ThreeStatusCheckBox';
 import KanjiType from 'data/KanjiListType';
 import { useState } from 'react';
 import useFetchKanjiList from '../../../hooks/useFetchKanjiList.hooks';
-
-export const CheckedType = {
-  FALSE: 'false',
-  MUST: 'must',
-  USABLE: 'usable',
-} as const;
-export type CheckedType = typeof CheckedType[keyof typeof CheckedType];
 
 const useKanjiCheckList = (
   setCheckedKanji: (list: string[]) => void,
@@ -15,7 +9,7 @@ const useKanjiCheckList = (
   errorFetchKanjiList: Error | null;
   isKanjiListLoaded: boolean;
   kanjiList: KanjiType[];
-  checkedList: { id: string; grade: number; status: CheckedType }[];
+  statusList: { id: string; grade: number; status: CheckedType }[];
   handleChange: (
     grade: number,
   ) => (gradeCheckedList: { id: string; status: CheckedType }[]) => void;
@@ -23,7 +17,7 @@ const useKanjiCheckList = (
   const { errorFetchKanjiList, isKanjiListLoaded, kanjiList } =
     useFetchKanjiList();
 
-  const [checkedList, setCheckedList] = useState<
+  const [statusList, setStatusList] = useState<
     { id: string; grade: number; status: CheckedType }[]
   >(
     kanjiList.map((i) => ({
@@ -37,7 +31,7 @@ const useKanjiCheckList = (
   const handleChange =
     (grade: number) =>
     (gradeCheckedList: { id: string; status: CheckedType }[]) => {
-      setCheckedList((prev) => {
+      setStatusList((prev) => {
         const newList = gradeCheckedList.map((x) => ({
           id: x.id,
           grade,
@@ -63,7 +57,7 @@ const useKanjiCheckList = (
     errorFetchKanjiList,
     isKanjiListLoaded,
     kanjiList,
-    checkedList,
+    statusList,
     handleChange,
   };
 };

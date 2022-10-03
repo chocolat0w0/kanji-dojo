@@ -1,19 +1,18 @@
+import { CheckedType } from 'components/atoms/ThreeStatusCheckBox';
 import { useState } from 'react';
-import { CheckedType } from '../TargetKanjiSelector/index.hooks';
+
+type IdStatusType = { id: string; status: CheckedType };
 
 const useGradeCheckList = (
-  checkedList: { id: string; status: CheckedType }[],
-  handleChange: (
-    gradeCheckedList: { id: string; status: CheckedType }[],
-  ) => void,
+  statusList: IdStatusType[],
+  handleChange: (gradeCheckedList: IdStatusType[]) => void,
 ): {
-  gradeCheckedList: typeof checkedList;
-  handleGradeChange: (childCheckedList: typeof checkedList) => void;
-  handleChildChange: (id: string, isChecked: boolean) => void;
+  handleGradeChange: (childCheckedList: typeof statusList) => void;
+  handleChildChange: (id: string, status: CheckedType) => void;
 } => {
-  const [gradeCheckedList, setGradeCheckedList] = useState(checkedList);
+  const [_, setGradeCheckedList] = useState(statusList);
 
-  const handleGradeChange = (childCheckedList: typeof checkedList) => {
+  const handleGradeChange = (childCheckedList: IdStatusType[]) => {
     setGradeCheckedList(() => {
       handleChange(childCheckedList);
 
@@ -21,11 +20,11 @@ const useGradeCheckList = (
     });
   };
 
-  const handleChildChange = (id: string, isChecked: boolean) => {
+  const handleChildChange = (id: string, status: CheckedType) => {
     setGradeCheckedList((prev) => {
       const newCheckedList = [
         ...prev.filter((l) => l.id !== id),
-        { id, status: isChecked ? CheckedType.MUST : CheckedType.FALSE },
+        { id, status },
       ];
 
       handleChange(newCheckedList);
@@ -34,7 +33,8 @@ const useGradeCheckList = (
     });
   };
 
-  return { gradeCheckedList, handleGradeChange, handleChildChange };
+  return { handleGradeChange, handleChildChange };
 };
 
+export type { IdStatusType };
 export default useGradeCheckList;
