@@ -1,12 +1,8 @@
 import { CheckedType } from 'components/atoms/ThreeStatusCheckBox';
 import KanjiType from 'data/KanjiListType';
+import { SelectedKanjiType } from 'data/SelectedKanjiTyoe';
 import { useState } from 'react';
 import useFetchKanjiList from '../../../hooks/useFetchKanjiList.hooks';
-
-type SelectedKanjiType = {
-  ji: string;
-  status: CheckedType;
-};
 
 const useKanjiSelector = (
   setSelectedKanji: (list: SelectedKanjiType[]) => void,
@@ -69,5 +65,4 @@ const useKanjiSelector = (
   };
 };
 
-export type { SelectedKanjiType };
 export default useKanjiSelector;
