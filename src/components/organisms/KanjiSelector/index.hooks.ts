@@ -3,8 +3,13 @@ import KanjiType from 'data/KanjiListType';
 import { useState } from 'react';
 import useFetchKanjiList from '../../../hooks/useFetchKanjiList.hooks';
 
-const useKanjiCheckList = (
-  setCheckedKanji: (list: string[]) => void,
+type SelectedKanjiType = {
+  ji: string;
+  status: CheckedType;
+};
+
+const useKanjiSelector = (
+  setSelectedKanji: (list: SelectedKanjiType[]) => void,
 ): {
   errorFetchKanjiList: Error | null;
   isKanjiListLoaded: boolean;
@@ -14,8 +19,11 @@ const useKanjiCheckList = (
     grade: number,
   ) => (gradeCheckedList: { id: string; status: CheckedType }[]) => void;
 } => {
-  const { errorFetchKanjiList, isKanjiListLoaded, kanjiList } =
-    useFetchKanjiList();
+  const {
+    hasError: errorFetchKanjiList,
+    isLoaded: isKanjiListLoaded,
+    kanjiList,
+  } = useFetchKanjiList();
 
   const [statusList, setStatusList] = useState<
     { id: string; grade: number; status: CheckedType }[]
@@ -32,24 +40,23 @@ const useKanjiCheckList = (
     (grade: number) =>
     (gradeCheckedList: { id: string; status: CheckedType }[]) => {
       setStatusList((prev) => {
-        const newList = gradeCheckedList.map((x) => ({
+        const newGrade = gradeCheckedList.map((x) => ({
           id: x.id,
           grade,
           status: x.status,
         }));
-        const list = [...prev.filter((x) => x.grade !== grade), ...newList];
+        const checked = [...prev.filter((x) => x.grade !== grade), ...newGrade];
 
-        // TODO: あとでMUST, USABLE分ける
         const tmp = kanjiList
-          .filter(
-            (l) =>
-              (list.find((x) => x.id === l.id)?.status ?? CheckedType.FALSE) !==
-              CheckedType.FALSE,
-          )
-          .map((l) => l.ji);
-        setCheckedKanji(tmp);
+          .map((k) => ({
+            ji: k.ji,
+            status:
+              checked.find((c) => c.id === k.id)?.status ?? CheckedType.FALSE,
+          }))
+          .filter((l) => l.status !== CheckedType.FALSE);
+        setSelectedKanji(tmp);
 
-        return list;
+        return checked;
       });
     };
 
@@ -62,4 +69,5 @@ const useKanjiCheckList = (
   };
 };
 
-export default useKanjiCheckList;
+export type { SelectedKanjiType };
+export default useKanjiSelector;

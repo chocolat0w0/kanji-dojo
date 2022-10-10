@@ -1,9 +1,9 @@
 import { VFC } from 'react';
-import useKanjiCountList from './index.hooks';
+import useKanjiCounter from './index.hooks';
 import './index.css';
 
-const KanjiCountList: VFC = () => {
-  const { errorFetch, isLoaded, kanjiList, countExam } = useKanjiCountList();
+const KanjiCounter: VFC = () => {
+  const { errorFetch, isLoaded, kanjiList, countExam } = useKanjiCounter();
 
   const countClass = (count: number): string => {
     if (count === 0) return 'exam-0';
@@ -45,4 +45,4 @@ const KanjiCountList: VFC = () => {
     </>
   );
 };
-export default KanjiCountList;
+export default KanjiCounter;

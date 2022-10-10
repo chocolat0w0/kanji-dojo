@@ -1,5 +1,5 @@
 import { Box, Typography } from '@material-ui/core';
-import KanjiCountList from 'components/organisms/KanjiCounter';
+import KanjiCounter from 'components/organisms/KanjiCounter';
 import WithHeader from 'components/templates/WithHeader';
 import React, { VFC } from 'react';
 
@@ -10,7 +10,7 @@ const Count: VFC = () => (
       <Typography variant="h4" gutterBottom component="h1">
         漢字リスト
       </Typography>
-      <KanjiCountList />
+      <KanjiCounter />
     </Box>
   </WithHeader>
 );

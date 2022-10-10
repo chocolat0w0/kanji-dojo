@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-import { ExampleType } from 'data/ExampleListType';
+import { QuestionType } from 'data/QuestionListType';
 
-const useFetchExampleList = (): {
-  errorFetchExampleList: Error | null;
-  isExampleListLoaded: boolean;
-  exampleList: ExampleType[];
+const useFetchQuestionList = (): {
+  hasError: Error | null;
+  isLoaded: boolean;
+  questionList: QuestionType[];
 } => {
-  const [isExampleListLoaded, setIsExampleListLoaded] = useState(false);
-  const [exampleList, setExampleList] = useState<ExampleType[]>([]);
-  const [errorFetchExampleList, setErrorFetchExampleList] =
-    useState<Error | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [questionList, setQuestionList] = useState<QuestionType[]>([]);
+  const [hasError, setErrorFetchExampleList] = useState<Error | null>(null);
 
   // AJAX と API：https://ja.reactjs.org/docs/faq-ajax.html
   useEffect(() => {
@@ -19,10 +18,10 @@ const useFetchExampleList = (): {
     fetch(`${process.env.PUBLIC_URL}/assets/json/exam_list.json`)
       .then((res) => res.json())
       .then(
-        (result: ExampleType[]) => {
+        (result: QuestionType[]) => {
           if (isMounted) {
-            setIsExampleListLoaded(() => true);
-            setExampleList(() => result);
+            setIsLoaded(() => true);
+            setQuestionList(() => result);
           }
         },
         // Note: it's important to handle errors here
@@ -30,7 +29,7 @@ const useFetchExampleList = (): {
         // exceptions from actual bugs in components.
         (error: Error) => {
           if (isMounted) {
-            setIsExampleListLoaded(() => true);
+            setIsLoaded(() => true);
             setErrorFetchExampleList(() => error);
           }
         },
@@ -43,10 +42,10 @@ const useFetchExampleList = (): {
   }, []);
 
   return {
-    errorFetchExampleList,
-    isExampleListLoaded,
-    exampleList,
+    hasError,
+    isLoaded,
+    questionList,
   };
 };
 
-export default useFetchExampleList;
+export default useFetchQuestionList;
