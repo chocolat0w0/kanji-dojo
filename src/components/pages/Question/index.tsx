@@ -1,14 +1,23 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Button, TextField, Typography } from '@material-ui/core';
 import { CheckedType } from 'components/atoms/ThreeStatusCheckBox';
 import QuestionList from 'components/organisms/QuestionList';
 import WithHeader from 'components/templates/WithHeader';
 import { SelectedKanjiType } from 'data/SelectedKanjiType';
-import { useMemo, VFC } from 'react';
+import { useCallback, useMemo, useState, VFC } from 'react';
 
 const Question: VFC<{
   selectedKanjiList: SelectedKanjiType[];
   changePrevMode: () => void;
 }> = ({ selectedKanjiList, changePrevMode }) => {
+  const [max, setMax] = useState(15);
+
+  const handleChangeMax = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setMax(Number(event.target.value));
+    },
+    [],
+  );
+
   const must = useMemo(
     () =>
       selectedKanjiList
@@ -31,7 +40,13 @@ const Question: VFC<{
         <Typography variant="h4" gutterBottom component="h1">
           問題文
         </Typography>
-        <QuestionList must={must} usable={usable} />
+        <TextField
+          type="number"
+          label="問題の数"
+          onChange={handleChangeMax}
+          value={max}
+        />
+        <QuestionList must={must} usable={usable} max={max} />
       </Box>
       <Button onClick={changePrevMode} variant="contained">
         漢字を選び直す

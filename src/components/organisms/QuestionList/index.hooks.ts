@@ -4,6 +4,7 @@ import useFetchQuestionList from '../../../hooks/useFetchQuestionList.hooks';
 const useQuestionList = (
   must: string[],
   usable: string[],
+  max: number,
 ): {
   hasError: Error | null;
   isLoaded: boolean;
@@ -41,7 +42,9 @@ const useQuestionList = (
           ? [ji, yomi]
           : yomi;
       }),
-    );
+    )
+    .sort(() => 0.5 - Math.random()) // シャッフル
+    .slice(0, max);
 
   return {
     hasError,

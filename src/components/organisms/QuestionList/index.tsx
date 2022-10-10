@@ -7,9 +7,10 @@ import useQuestionList from './index.hooks';
 const QuestionList: VFC<{
   must: string[];
   usable: string[];
-}> = ({ must, usable }) => {
+  max: number;
+}> = ({ must, usable, max }) => {
   const { hasError, isLoaded, list, canCheckAnswer, setCanCheckAnswer } =
-    useQuestionList(must, usable);
+    useQuestionList(must, usable, max);
 
   if (hasError) {
     return <p>Error: {hasError.message}</p>;
