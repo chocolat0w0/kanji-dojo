@@ -1,6 +1,9 @@
 import { Box, Checkbox, FormControlLabel } from '@material-ui/core';
-import CheckBox, { CheckBoxType } from 'components/atoms/CheckBox';
-import { CheckedType } from 'components/organisms/KanjiCheckList/index.hooks';
+import ThreeStatusCheckBox, {
+  CheckBoxType,
+  CheckedType,
+} from 'components/atoms/ThreeStatusCheckBox';
+import { IdStatusType } from 'components/organisms/GradeCheckList/index.hooks';
 import { VFC } from 'react';
 
 const CheckBoxesParent: VFC<{
@@ -8,33 +11,50 @@ const CheckBoxesParent: VFC<{
   name: string;
   label: string;
   childList: CheckBoxType[];
-  childCheckedList: string[];
-  handleChange: (
-    childCheckedList: { id: string; status: CheckedType }[],
-  ) => void;
-}> = ({ id, name, label, childList, childCheckedList, handleChange }) => {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleChange(
-      e.target.checked
-        ? childList.map((l) => ({ id: l.id, status: CheckedType.MUST }))
-        : childList.map((l) => ({ id: l.id, status: CheckedType.FALSE })),
-    );
+  handleChange: (childCheckedList: IdStatusType[]) => void;
+}> = ({ id, name, label, childList, handleChange }) => {
+  const onChangeParent = (_: React.ChangeEvent<HTMLInputElement>) => {
+    if (childList.every((l) => l.status === CheckedType.MUST)) {
+      // 全must→ 全false
+      handleChange(
+        childList.map((l) => ({ id: l.id, status: CheckedType.FALSE })),
+      );
+    } else if (childList.some((l) => l.status === CheckedType.FALSE)) {
+      // 一部でも false → 全usable
+      handleChange(
+        childList.map((l) => ({ id: l.id, status: CheckedType.USABLE })),
+      );
+    } else {
+      // それ以外(全 usable or must) → 全usable
+      handleChange(
+        childList.map((l) => ({ id: l.id, status: CheckedType.MUST })),
+      );
+    }
   };
 
-  const hasAllChecked = childList.every((l) => childCheckedList.includes(l.id));
-  const hasSomeChecked = childList.some((l) => childCheckedList.includes(l.id));
+  const hasAllChecked = childList.every(
+    (l) => l.status === CheckedType.MUST || l.status === CheckedType.USABLE,
+  );
+  const hasSomeChecked = childList.some(
+    (l) => l.status === CheckedType.MUST || l.status === CheckedType.USABLE,
+  );
+
+  const style = childList.every((l) => l.status === CheckedType.MUST)
+    ? { color: 'red' }
+    : {};
 
   return (
     <>
       <FormControlLabel
         label={label}
+        style={style}
         control={
           <Checkbox
             id={id}
             name={name}
             checked={hasAllChecked}
             indeterminate={hasSomeChecked && !hasAllChecked}
-            onChange={onChange}
+            onChange={onChangeParent}
           />
         }
       />
@@ -43,11 +63,11 @@ const CheckBoxesParent: VFC<{
         component="form"
       >
         {childList.map((l) => (
-          <CheckBox
+          <ThreeStatusCheckBox
             id={l.id}
             name={l.name}
             label={l.label}
-            checked={childCheckedList.includes(l.id)}
+            status={l.status}
             key={l.id}
             handleChange={l.handleChange}
           />

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import KanjiType from 'data/KanjiListType';
 
 const useFetchKanjiList = (): {
-  errorFetchKanjiList: Error | null;
-  isKanjiListLoaded: boolean;
+  hasError: Error | null;
+  isLoaded: boolean;
   kanjiList: KanjiType[];
 } => {
   const [isKanjiListLoaded, setIsKanjiListLoaded] = useState(false);
@@ -44,8 +44,8 @@ const useFetchKanjiList = (): {
   }, []);
 
   return {
-    errorFetchKanjiList,
-    isKanjiListLoaded,
+    hasError: errorFetchKanjiList,
+    isLoaded: isKanjiListLoaded,
     kanjiList,
   };
 };
