@@ -1,18 +1,15 @@
-import { SelectedKanjiType } from 'data/SelectedKanjiTyoe';
+import { SelectedKanjiType, SelectedStatusType } from 'data/SelectedKanjiType';
 import { VFC } from 'react';
 import GradeCheckList from '../GradeCheckList';
 import useKanjiSelector from './index.hooks';
 
 const KanjiSelector: VFC<{
+  statusList: SelectedStatusType[];
+  setStatusList: React.Dispatch<React.SetStateAction<SelectedStatusType[]>>;
   setSelectedKanji: React.Dispatch<React.SetStateAction<SelectedKanjiType[]>>;
-}> = ({ setSelectedKanji }) => {
-  const {
-    errorFetchKanjiList,
-    isKanjiListLoaded,
-    kanjiList,
-    statusList,
-    handleChange,
-  } = useKanjiSelector(setSelectedKanji);
+}> = ({ statusList, setStatusList, setSelectedKanji }) => {
+  const { errorFetchKanjiList, isKanjiListLoaded, kanjiList, handleChange } =
+    useKanjiSelector(setStatusList, setSelectedKanji);
 
   if (errorFetchKanjiList) {
     return <p>Error: {errorFetchKanjiList.message}</p>;

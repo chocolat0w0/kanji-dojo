@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@material-ui/core';
 import { CheckedType } from 'components/atoms/ThreeStatusCheckBox';
 import QuestionList from 'components/organisms/QuestionList';
 import WithHeader from 'components/templates/WithHeader';
-import { SelectedKanjiType } from 'data/SelectedKanjiTyoe';
+import { SelectedKanjiType } from 'data/SelectedKanjiType';
 import { useMemo, VFC } from 'react';
 
 const Question: VFC<{

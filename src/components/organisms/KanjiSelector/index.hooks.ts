@@ -1,16 +1,15 @@
 import { CheckedType } from 'components/atoms/ThreeStatusCheckBox';
 import KanjiType from 'data/KanjiListType';
-import { SelectedKanjiType } from 'data/SelectedKanjiTyoe';
-import { useState } from 'react';
+import { SelectedKanjiType, SelectedStatusType } from 'data/SelectedKanjiType';
 import useFetchKanjiList from '../../../hooks/useFetchKanjiList.hooks';
 
 const useKanjiSelector = (
-  setSelectedKanji: (list: SelectedKanjiType[]) => void,
+  setStatusList: React.Dispatch<React.SetStateAction<SelectedStatusType[]>>,
+  setSelectedKanji: React.Dispatch<React.SetStateAction<SelectedKanjiType[]>>,
 ): {
   errorFetchKanjiList: Error | null;
   isKanjiListLoaded: boolean;
   kanjiList: KanjiType[];
-  statusList: { id: string; grade: number; status: CheckedType }[];
   handleChange: (
     grade: number,
   ) => (gradeCheckedList: { id: string; status: CheckedType }[]) => void;
@@ -20,16 +19,6 @@ const useKanjiSelector = (
     isLoaded: isKanjiListLoaded,
     kanjiList,
   } = useFetchKanjiList();
-
-  const [statusList, setStatusList] = useState<
-    { id: string; grade: number; status: CheckedType }[]
-  >(
-    kanjiList.map((i) => ({
-      id: i.id,
-      grade: i.grade,
-      status: CheckedType.FALSE,
-    })),
-  );
 
   // 1学年分の選択リストをもらって全学年のリストを更新する
   const handleChange =
@@ -60,7 +49,6 @@ const useKanjiSelector = (
     errorFetchKanjiList,
     isKanjiListLoaded,
     kanjiList,
-    statusList,
     handleChange,
   };
 };

@@ -3,13 +3,15 @@ import { useLocation } from 'react-router-dom';
 import './App.css';
 import Select from 'components/pages/Select';
 import Count from 'components/pages/Count';
-import { SelectedKanjiType } from 'data/SelectedKanjiTyoe';
+import { SelectedKanjiType, SelectedStatusType } from 'data/SelectedKanjiType';
 import Question from 'components/pages/Question';
 
 type Mode = 'select' | 'count' | 'question' | 'answer';
 
 const App: VFC = () => {
   const [mode, setMode] = useState<Mode>('select');
+  const [statusList, setStatusList] = useState<SelectedStatusType[]>([]);
+
   const [selectedKanjiList, setSelectedKanjiList] = useState<
     SelectedKanjiType[]
   >([]);
@@ -38,6 +40,8 @@ const App: VFC = () => {
         case 'select':
           return (
             <Select
+              statusList={statusList}
+              setStatusList={setStatusList}
               setSelectedKanjiList={setSelectedKanjiList}
               changeNextMode={changeNextMode}
             />
@@ -58,7 +62,7 @@ const App: VFC = () => {
           return <p>エラー</p>;
       }
     },
-    [changeNextMode, changePrevMode, selectedKanjiList],
+    [changeNextMode, changePrevMode, selectedKanjiList, statusList],
   );
 
   return <div className="App">{getComponent(mode)}</div>;
