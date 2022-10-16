@@ -17,6 +17,8 @@ test('漢字リストjsonが返却されなかったらエラーが表示され�
   render(
     <KanjiSelector
       // eslint-disable-next-line @typescript-eslint/no-empty-function
+      statusList={[]}
+      setStatusList={() => []}
       setSelectedKanji={setSelectedKanji}
     />,
   );
@@ -29,6 +31,8 @@ test('漢字リストがチェックされたらイベントハンドラが呼�
   render(
     <KanjiSelector
       // eslint-disable-next-line @typescript-eslint/no-empty-function
+      statusList={[]}
+      setStatusList={() => []}
       setSelectedKanji={setSelectedKanji}
     />,
   );
