@@ -9,8 +9,14 @@ const QuestionList: VFC<{
   usable: string[];
   max: number;
 }> = ({ must, usable, max }) => {
-  const { hasError, isLoaded, list, canCheckAnswer, setCanCheckAnswer } =
-    useQuestionList(must, usable, max);
+  const {
+    hasError,
+    isLoaded,
+    list,
+    shuffle,
+    canCheckAnswer,
+    setCanCheckAnswer,
+  } = useQuestionList(must, usable, max);
 
   if (hasError) {
     return <p>Error: {hasError.message}</p>;
@@ -22,15 +28,18 @@ const QuestionList: VFC<{
 
   return (
     <>
+      <Button onClick={shuffle} variant="contained">
+        シャッフル
+      </Button>
       <ul>
         {list.map((l) => (
-          <li key={`exam-${l.toString()}`}>
-            {l.map((x) => {
-              if (typeof x === 'string') {
-                return x;
+          <li key={l.id}>
+            {l.q.map((x) => {
+              if (x.t === 'kana') {
+                return x.v;
               }
 
-              const [ji, yomi] = x;
+              const [ji, yomi] = x.v;
 
               return (
                 <FuriganaBox
