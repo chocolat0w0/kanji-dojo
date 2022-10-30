@@ -4,11 +4,11 @@ import QuestionList from 'components/organisms/QuestionList';
 import WithHeader from 'components/templates/WithHeader';
 import { SelectedKanjiType } from 'data/SelectedKanjiType';
 import { useCallback, useMemo, useState, VFC } from 'react';
+import { Link } from 'react-router-dom';
 
 const Question: VFC<{
   selectedKanjiList: SelectedKanjiType[];
-  changePrevMode: () => void;
-}> = ({ selectedKanjiList, changePrevMode }) => {
+}> = ({ selectedKanjiList }) => {
   const [max, setMax] = useState(15);
 
   const handleChangeMax = useCallback(
@@ -48,7 +48,7 @@ const Question: VFC<{
         />
         <QuestionList must={must} usable={usable} max={max} />
       </Box>
-      <Button onClick={changePrevMode} variant="contained">
+      <Button component={Link} to="/" variant="contained">
         漢字を選び直す
       </Button>
     </WithHeader>

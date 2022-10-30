@@ -3,6 +3,7 @@ import KanjiSelector from 'components/organisms/KanjiSelector';
 import WithHeader from 'components/templates/WithHeader';
 import { VFC } from 'react';
 import { SelectedKanjiType, SelectedStatusType } from 'data/SelectedKanjiType';
+import { Link } from 'react-router-dom';
 
 const Select: VFC<{
   statusList: SelectedStatusType[];
@@ -10,8 +11,7 @@ const Select: VFC<{
   setSelectedKanjiList: React.Dispatch<
     React.SetStateAction<SelectedKanjiType[]>
   >;
-  changeNextMode: () => void;
-}> = ({ statusList, setStatusList, setSelectedKanjiList, changeNextMode }) => (
+}> = ({ statusList, setStatusList, setSelectedKanjiList }) => (
   <WithHeader>
     {/* 漢字を学習年別に表示 */}
     <Box component="section">
@@ -25,7 +25,7 @@ const Select: VFC<{
       />
     </Box>
 
-    <Button onClick={changeNextMode} variant="contained">
+    <Button component={Link} to="/question" variant="contained">
       問題を作成する
     </Button>
   </WithHeader>
